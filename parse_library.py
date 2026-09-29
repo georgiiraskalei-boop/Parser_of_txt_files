@@ -7,8 +7,11 @@ def get_user_input():
     way_to_user_file=input("Введите путь к файлу: ")
 # 2. Запросить слово, букву или фразу для поиска.
     object_of_user_search=input("Введите искомый обьект: ")
-# 3. Вернуть эти два значения дальше в программу.
-    return.strip(way_to_user_file, object_of_user_search)
+# 3.  Очистить от мусора
+    way_to_user_file = way_to_user_file.strip().strip('"').strip("'")    
+    object_of_user_search=object_of_user_search.strip() 
+# 4. Вернуть эти два значения дальше в программу.
+    return(way_to_user_file, object_of_user_search)
 
 
 # ==========================================
