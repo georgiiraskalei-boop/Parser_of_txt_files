@@ -12,14 +12,30 @@ def get_user_input():
     object_of_user_search=object_of_user_search.strip() 
 # 4. Вернуть эти два значения дальше в программу.
     return(way_to_user_file, object_of_user_search)
-
-
 # ==========================================
 # БЛОК 2: ОБРАБОТКА И ПОИСК В ФАЙЛЕ
 # ==========================================
-# Функция должна принимать: путь к файлу и искомую строку.
-# Внутри себя функция должна:
-# 1. Открыть файл на чтение с правильной кодировкой (utf-8).
+def check_and_processing(way_to_user_file, object_of_user_search):
+# 0. Проверка формата файла
+    if not way_to_user_file.lower().endswith(".txt"):
+        print("Только .тхт файлы")
+        return[],0
+# 1. Попытка открыть и обработать файл
+    try:
+        with open(way_to_user_file,'r', encoding='utf-8') as user_file:
+            found_matches=[]
+            for line_number, line in enumerate(user_file, start=1):
+                if object_of_user_search in line:
+                    found_matches.append((line_number, line.strip()))
+
+    except UnicodeDecodeError:
+        print('Невозможній файл')
+        return[], 0
+    except FileNotFoundError:
+        print('Ошибка, файл не найден')
+        return[], 0      
+    return(found_matches, len(found_matches))                  
+# Сюда дальше встанет цикл с enumerate
 # 2. Пройтись циклом по каждой строке с использованием enumerate (чтобы вести отсчёт номеров строк с 1).
 # 3. Проверить, содержится ли искомый текст в текущей строке.
 # 4. Если содержится:
@@ -28,7 +44,7 @@ def get_user_input():
 # 5. Вернуть список кортежей вида [(3, "текст"), (25, "текст")] и общее количество совпадений.
 
 
-# ==========================================
+# ==========================================¬¬¬
 # БЛОК 3: ГЛАВНАЯ ФУНКЦИЯ И ВЫВОД РЕЗУЛЬТАТОВ
 # ==========================================
 # Функция main должна:
