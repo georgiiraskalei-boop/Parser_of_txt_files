@@ -40,21 +40,30 @@ def check_and_processing(way_to_user_file, object_of_user_search):
 # БЛОК 3: ГЛАВНАЯ ФУНКЦИЯ И ВЫВОД РЕЗУЛЬТАТОВ
 # ==========================================
 def main():
-    path, search_term = get_user_input()
-    results, total_count = check_and_processing(path, search_term)
-    if total_count==0:
-        print("Совпадений нет")
-        return
-    if total_count>0:
-        print(f"Найдено совпадений: {total_count}")
-        for line_number, line_text in results:
-            print(f"Строка:{line_number}, Текст:{line_text}")
+    while True:
+        path, search_term = get_user_input()
+        
+        # Предусматриваем вариант выхода
+        if path.lower() in ('exit', 'quit', 'выход'):
+            print("Завершение работы программы.")
+            break
+
+        results, total_count = check_and_processing(path, search_term)
+
+        if total_count == 0:
+            print("Совпадений нет.")
+        else:
+            print(f"\nНайдено совпадений: {total_count}")
+            for line_number, line_text in results:
+                print(f"Строка № {line_number}: {line_text}")
+
+        # Запрос на повторный запуск
+        print("\n" + "=" * 40)
+        again = input("Хотите выполнить еще один поиск? (y/n): ").strip().lower()
+        if again not in ('y', 'yes', 'д', 'да'):
+            print("Работа завершена.")
+            break
+
+
 if __name__ == "__main__":
-    main()            
-# Функция main должна:
-# 1. Вызвать Блок 1 (получить путь и искомую строку).
-# 2. Передать эти данные в Блок 2 (получить результаты поиска).
-# 3. Вывести в консоль:
-#    - Общее количество найденных совпадений.
-#    - Вывести каждую найденную строку с явным указанием номера:
-#      Пример вывода: "Строка № 25: <содержимое строки>"
+    main()
